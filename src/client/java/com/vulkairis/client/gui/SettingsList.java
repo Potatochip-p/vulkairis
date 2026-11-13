@@ -18,7 +18,7 @@ import java.util.List;
  */
 public class SettingsList extends ObjectSelectionList<SettingsList.Row> {
 
-    private static final int CONTROL_WIDTH = 150;
+    private static final int CONTROL_WIDTH = 140;
     private static final int CONTROL_HEIGHT = 20;
 
     public SettingsList(Minecraft minecraft, int width, int height, int y, int itemHeight) {

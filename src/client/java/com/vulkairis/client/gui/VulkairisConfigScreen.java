@@ -20,10 +20,10 @@ import java.util.Map;
  */
 public class VulkairisConfigScreen extends Screen {
 
-    private static final int RAIL_WIDTH = 150;
-    private static final int MARGIN = 12;
-    private static final int TOP_BAR = 36;
-    private static final int FOOTER = 32;
+    private static final int RAIL_WIDTH = 120;
+    private static final int MARGIN = 10;
+    private static final int TOP_BAR = 28;
+    private static final int FOOTER = 28;
 
     private final Screen parent;
     private final java.util.function.Function<GuiCategory, GuiViewModel> models;
@@ -74,20 +74,19 @@ public class VulkairisConfigScreen extends Screen {
         int buttonY = TOP_BAR + 8;
         for (GuiCategory value : GuiCategory.values()) {
             GuiCategory target = value;
-            Button rail = Button.builder(Component.literal(
-                            (target == category ? "> " : "") + target.title()),
+            Button rail = Button.builder(Component.literal(target.title()),
                             button -> showCategory(target))
-                    .bounds(railX + 4, buttonY, buttonWidth, 20)
+                    .bounds(railX + 4, buttonY, buttonWidth, 18)
                     .build();
             railButtons.put(target, rail);
             addRenderableWidget(rail);
-            buttonY += 24;
+            buttonY += 22;
         }
 
         int listX = MARGIN + RAIL_WIDTH;
         int listWidth = Math.max(200, this.width - listX - MARGIN);
         list = new SettingsList(minecraft, listWidth, this.height - TOP_BAR - FOOTER - MARGIN,
-                TOP_BAR + 4, 44);
+                TOP_BAR + 4, 40);
         list.setX(listX);
         refreshRows();
         addRenderableWidget(list);
@@ -108,8 +107,7 @@ public class VulkairisConfigScreen extends Screen {
         this.resetArmed = false;
         resetButton.setMessage(Component.literal("Reset"));
         for (Map.Entry<GuiCategory, Button> entry : railButtons.entrySet()) {
-            entry.getValue().setMessage(Component.literal(
-                    (entry.getKey() == category ? "> " : "") + entry.getKey().title()));
+            entry.getValue().setMessage(Component.literal(entry.getKey().title()));
         }
         refreshRows();
     }
@@ -176,10 +174,19 @@ public class VulkairisConfigScreen extends Screen {
     public void render(GuiGraphics graphics, int mouseX, int mouseY, float partialTick) {
         // Vanilla background (blur + darkening) so the screen matches native menus.
         renderBackground(graphics, mouseX, mouseY, partialTick);
+        // Subtle panel behind the category rail and content area for a clean, minimalist look.
+        int railPanelX = MARGIN - 2;
+        int railPanelY = TOP_BAR - 2;
+        int railPanelW = RAIL_WIDTH + 4;
+        int railPanelH = this.height - TOP_BAR - FOOTER + 4;
+        graphics.fill(railPanelX, railPanelY, railPanelX + railPanelW, railPanelY + railPanelH, 0x60000000);
+        int contentX = MARGIN + RAIL_WIDTH;
+        int contentW = this.width - contentX - MARGIN;
+        graphics.fill(contentX - 2, railPanelY, contentX + contentW + 2, railPanelY + railPanelH, 0x40000000);
         // Vanilla-style title: centered, shadowed.
-        graphics.drawCenteredString(font, getTitle(), this.width / 2, 12, 0xFFFFFFFF);
+        graphics.drawCenteredString(font, getTitle(), this.width / 2, 8, 0xFFFFFFFF);
         // Subtitle showing the active category, vanilla gray.
-        graphics.drawCenteredString(font, category.title(), this.width / 2, 24, 0xFFAAAAAA);
+        graphics.drawCenteredString(font, category.title(), this.width / 2, 20, 0xFFAAAAAA);
         super.render(graphics, mouseX, mouseY, partialTick);
         if (!notice.isEmpty()) {
             graphics.drawCenteredString(font, font.plainSubstrByWidth(notice, this.width - 40),

@@ -5,7 +5,11 @@
 	"name": "Vulkairis",
 	"description": "Unofficial mod that let's you use Iris shaders with Vulkanmod",
 	"authors": [
-		"ColorfulSunshine & Lilbroskato"
+		"ColorfulSunshine"
+	],
+	"contributors": [
+		"Lilbroskato",
+		"crispypeanutsyt"
 	],
 	"contact": {
 		"homepage": "https://modrinth.com/mod/vulkairis",
@@ -43,5 +47,10 @@
 		"iris": "1.8.14-beta.1+mc1.21.1",
 		"vulkanmod": "0.6.7+1.21.1"
 	},
-	"provides": ["sodium"]
+	"provides": ["sodium"],
+	"jars": [
+		{
+			"file": "META-INF/jars/sodium-api.jar"
+		}
+	]
 }

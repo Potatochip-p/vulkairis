@@ -92,7 +92,7 @@ public class UniformBridge {
         // float worldTime
         target.putFloat((float)worldTime);
         // float sunAngle
-        target.putFloat(0.0f); // Placeholder for actual sun angle
+        target.putFloat((float)((worldTime % 24000L) / 24000.0 * Math.PI * 2));
         // float rainStrength
         target.putFloat(rainStrength);
         // float wetness

@@ -137,6 +137,13 @@ tasks.processResources {
 	filesMatching("fabric.mod.json") {
 		expand("version" to version)
 	}
+
+	// Bundle the Sodium API jar so Iris's sodium dependency is satisfied at runtime
+	// without requiring the (conflicting) Sodium renderer mod to be installed.
+	from("LIBS/sodium-api.jar") {
+		into("META-INF/jars")
+		rename { "sodium-api.jar" }
+	}
 }
 
 tasks.withType<JavaCompile>().configureEach {
